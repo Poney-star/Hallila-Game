@@ -843,6 +843,9 @@ function nextForm() {
 
 function endGame() {
   state.ended = true;
+  try {
+    localStorage.setItem('hallilaa.completed.zerbiboss', '1');
+  } catch (e) {}
   let title = '* Fin mixte.';
   let line = '* Le Zerbib te regarde, perplexe, comme un buffet mal refermé.';
   if (state.spares === forms.length) {
