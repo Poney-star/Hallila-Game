@@ -1,0 +1,15 @@
+Third-party assets added in this build
+====================================
+
+1) Player walking sprite
+- Source: OpenGameArt, "Hero character sprite sheet" by Fry
+- URL: https://opengameart.org/content/hero-character-sprite-sheet
+- File used: player.png (download URL resolves to player_41.png)
+- License: CC0
+- Notes: used for the overworld player walk cycle and direction switching.
+
+2) Battle music reference used for licensing note only
+- Suggested source: OpenGameArt, "Fast fight / battle music (looped)"
+- URL: https://opengameart.org/content/fast-fight-battle-music-looped
+- License: CC0
+- Notes: not bundled directly because this build generates pokeitan fight.wav locally from the existing pokeitan final.wav so the project works offline immediately.

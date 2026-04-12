@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Respire ou Crève — Alex Clicker</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<audio id="bgMusic" src="assets/Alexidle.wav" loop preload="auto"></audio>
+<div id="finalVideoOverlay" aria-hidden="true">
+  <video id="finalVideo" preload="auto" playsinline src="assets/finale.mp4"></video>
+  <div id="finalVideoText">omg t tro bo</div>
+</div>
+<div id="game">
+  <section class="panel left">
+    <div class="wood">Respire ou Crève</div>
+    <div class="stats">
+      <div class="title">
+        <h1>Alex doit tenir le coup</h1>
+        <div class="sub">Version multi-fichiers propre : aucune sauvegarde, un refresh remet tout à zéro, et la logique tourne en temps fixe.</div>
+      </div>
+      <div class="card" id="hpCard">
+        <div class="hp-top">
+          <div>
+            <div class="hp-num" id="hpText">12 PV</div>
+            <div class="small" id="drainText">perte / sec : -3.5</div>
+          </div>
+          <div class="small">capacité : <span id="maxHpText">100</span></div>
+        </div>
+        <div class="bar"><div class="fill" id="hpFill"></div></div>
+      </div>
+      <div class="card goalbox">
+        <div class="hp-top">
+          <div>
+            <div class="small">Objectif de victoire</div>
+            <div class="value gold" id="goalText">0 / 1M souffles</div>
+          </div>
+          <div class="small" id="goalPctText">0%</div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="mini"><div class="label">Souffles</div><div class="value blue" id="souffleText">0</div></div>
+        <div class="mini"><div class="label">Par clic</div><div class="value green" id="clickText">+3 PV / +1 souffles</div></div>
+        <div class="mini"><div class="label">Souffles passifs</div><div class="value blue" id="passiveText">0.0/s</div></div>
+        <div class="mini"><div class="label">Ventoline</div><div class="value blue" id="ventolineLevelText">Niv.1</div><div class="hudbar"><div class="hudfill bluefill" id="ventolineFill"></div></div></div>
+        <div class="mini"><div class="label">Asthme</div><div class="value gold" id="asthmaText">1.0</div><div class="hudbar"><div class="hudfill goldfill" id="asthmaFill"></div></div></div>
+        <div class="mini"><div class="label">Risque global</div><div class="value" id="riskText">Faible</div><div class="hudbar"><div class="hudfill redfill" id="riskFill"></div></div></div>
+        <div class="mini"><div class="label">Crise</div><div class="value safe" id="crisisText">Non</div><div class="hudbar"><div class="hudfill greenfill" id="crisisFill"></div></div></div>
+        <div class="mini"><div class="label">Combo</div><div class="value blue" id="comboText">x1.00</div><div class="hudbar"><div class="hudfill bluefill" id="comboFill"></div></div></div>
+      </div>
+      <button id="lungButton" aria-label="Respirer"><div class="lungring"></div><img src="assets/poumons.png" alt="Poumons"></button>
+      <div class="caption">Clique pour arracher quelques PV et du souffle avant qu’Alex ne s’effondre.</div>
+    </div>
+  </section>
+
+  <section class="panel center">
+    <div class="stage">
+      <div class="topbar" id="stageTopbar">État d’Alex : <span id="stageMessage">Il peut mourir dans les prochaines secondes.</span></div>
+      <div class="shelf"></div>
+      <div class="floor"></div>
+      <div id="stageEffects">
+        <h3>Effets actifs</h3>
+        <div id="effects"></div>
+      </div>
+      <div id="accumulation"></div>
+      <div class="main-alex"><img src="assets/alex.png" alt="Alex"></div>
+      <div id="stageActions">
+        <h3>Actions & crise</h3>
+        <div class="btns">
+          <button type="button" class="btn good" id="ventolineBtn">Ventoline <small id="ventolineInfo">clic actif : soigne et stabilise</small></button>
+          <button type="button" class="btn warn" id="defibBtn">Défibrillateur <small id="defibInfo">charges : 0</small></button>
+          <button type="button" class="btn" id="walkBtn">Marche <small>souffles modérés, fatigue légère</small></button>
+          <button type="button" class="btn bad" id="runBtn">Course <small>gros gain de souffles, risque fort</small></button>
+          <button type="button" class="btn bad" id="smokeBtn">Cigarette <small>boost immédiat, grande crise possible</small></button>
+          <button type="button" class="btn danger" id="restartBtn">Recommencer la run <small>attention : remise à zéro immédiate</small></button>
+        </div>
+        <div class="restartWarn">Le bouton rouge relance la run. Une confirmation s’ouvrira avant de tout recommencer.</div>
+      </div>
+      <div id="notifications"></div>
+      <div id="panicOverlay"></div>
+      <div id="spawn"></div>
+      <div class="flash red" id="flashRed"></div>
+      <div class="flash blue" id="flashBlue"></div>
+      <div id="confirmRestart">
+        <div class="overlay confirm">
+          <h2>Êtes-vous sûr de vouloir recommencer la run ?</h2>
+          <p>La progression de la run en cours sera remise à zéro. Utilise seulement ce bouton si tu veux vraiment repartir du début.</p>
+          <div class="row">
+            <button type="button" class="buy" id="cancelRestartBtn">Annuler</button>
+            <button type="button" class="buy danger" id="confirmRestartBtn">Oui, recommencer</button>
+          </div>
+        </div>
+      </div>
+      <div id="death">
+        <div class="overlay">
+          <h2>Alex est KO.</h2>
+          <p>Relance pour repartir avec la progression rééquilibrée et des achats plus accessibles.</p>
+          <div class="row"><button type="button" class="buy danger" id="retryBtn">Relancer</button></div>
+        </div>
+      </div>
+      <div id="victory">
+        <div class="overlay victory">
+          <h2>Bravo, tu as gagné la partie !</h2>
+          <p>Grâce à toi, je peux aller voter, je ne vais pas aller rejoindre JMLP.</p>
+          <div class="row"><button type="button" class="buy" id="victoryRetryBtn">Relancer une partie</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel right">
+    <div class="wood">Boutique</div>
+    <div class="tabs">
+      <button class="tab active" data-tab="shopTab">Sources & niveaux</button>
+      <button class="tab" data-tab="upgradeTab">Multiplicateurs</button>
+    </div>
+    <div class="tabc active" id="shopTab">
+      <div class="shoptitle">Sources et progression d’Alex</div>
+      <div class="note">Version propre sans sauvegarde locale. Les coûts restent rééquilibrés et la partie repart de zéro après refresh.</div>
+      <div class="list" id="shopList"></div>
+    </div>
+    <div class="tabc" id="upgradeTab">
+      <div class="shoptitle">Améliorations achetables</div>
+      <div class="note">Améliorations positives uniquement : clic, multiplicateurs de production, puissance de ventoline et boosts globaux.</div>
+      <div class="list" id="upgradeList"></div>
+    </div>
+    <div class="tiny">Aucune sauvegarde : un refresh remet la partie à zéro.</div>
+  </section>
+</div>
+
+<script src="game.js" defer></script>
+<a href="../../index.html"
+   style="position:fixed;top:14px;left:14px;z-index:9999;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.62);color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:700">
+  ← Retour au hub
+</a>
+</body>
+</html>

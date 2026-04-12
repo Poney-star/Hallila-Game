@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adam - Ping Pong Range Neon</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-wrap">
+    <canvas id="gameCanvas" aria-label="Jeu Ping Pong Range"></canvas>
+
+    <aside id="hud">
+      <h1>🏓 Adam - Ping Pong Range Neon</h1>
+      <div class="stat-row"><span>Niveau</span><strong id="levelText">1</strong></div>
+      <div class="stat-row"><span>Score niveau</span><strong id="scoreText">0</strong></div>
+      <div class="stat-row"><span>Objectif</span><strong id="goalText">18</strong></div>
+      <div class="stat-row"><span>Temps</span><strong id="timeText">35.0s</strong></div>
+      <div class="stat-row"><span>Ratés restants</span><strong id="livesText">7</strong></div>
+      <div class="stat-row"><span>Précision</span><strong id="accuracyText">0%</strong></div>
+      <div class="stat-row"><span>Combo</span><strong id="comboText">x1.0</strong></div>
+      <div class="stat-row"><span>Multiplicateur score</span><strong id="weaponText">x1</strong></div>
+
+      <section class="power-panel">
+        <h2>Mode entraînement</h2>
+        <p>
+          Clique sur une cible : la balle part de la raquette vers l'endroit visé.
+          Après 3 touches d'affilée sans rater, ton score passe en x2. Après 6 touches d'affilée, il passe en x3.
+          Au moindre tir raté, le multiplicateur retombe à x1. Finis le niveau 4 pour déclencher l'écran final.
+        </p>
+      </section>
+    </aside>
+
+    <div id="overlay">
+      <div class="card" id="overlayCard">
+        <h2>Ping Pong Blaster Neon</h2>
+        <p>
+          Version galerie de tir néon : Adam reste au poste, vise à la souris et tire des balles de ping-pong
+          avec sa raquette. Les cibles avancent sur plusieurs lignes comme dans un stand de fête foraine.
+        </p>
+        <div class="columns">
+          <div>
+            <h3>Commandes</h3>
+            <ul>
+              <li><strong>Souris</strong> : viser</li>
+              <li><strong>Clic gauche</strong> : tirer vers le point visé</li>
+              <li><strong>Espace</strong> : tirer aussi</li>
+              <li><strong>P</strong> : pause</li>
+              <li><strong>R</strong> : recommencer</li>
+              <li><strong>M</strong> : couper / remettre le son et la musique</li>
+            </ul>
+          </div>
+          <div>
+            <h3>But</h3>
+            <ul>
+              <li>Atteindre l'objectif de score avant la fin du temps</li>
+              <li>Ne pas gaspiller tes tirs : chaque niveau autorise un certain nombre de ratés</li>
+              <li>Enchaîner les hits pour monter le combo</li>
+              <li>Finir le niveau 4 pour lancer la fin spéciale</li>
+            </ul>
+          </div>
+        </div>
+        <button id="startBtn">Lancer la partie</button>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/game.js"></script>
+  <a href="../index.html"
+   style="position:fixed;top:14px;left:14px;z-index:9999;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.62);color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:700">
+  ← Retour au hub
+</a>
+<a href="../index.html"
+   style="position:fixed;top:14px;left:14px;z-index:9999;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.62);color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:700">
+  ← Retour au hub
+</a>
+</body>
+</html>

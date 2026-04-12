@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Zerbib</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-shell">
+    <div class="top-row">
+      <div class="sprite-panel">
+        <img id="enemySprite" alt="Zerbib" />
+      </div>
+      <div class="status-panel">
+        <div class="title-wrap">
+          <h1>LE ZERBIB</h1>
+          <div id="formName" class="form-name"></div>
+        </div>
+        <div class="bars">
+          <div class="row"><span>Joueur</span><div class="bar"><div id="playerHpBar" class="fill hp"></div></div><span id="playerHpText"></span></div>
+          <div class="row"><span>Zerbib</span><div class="bar"><div id="enemyHpBar" class="fill enemy"></div></div><span id="enemyHpText"></span></div>
+          <div class="row small"><span>Cafés froids</span><span id="coffeeText"></span></div>
+          <div class="row small"><span>Route</span><span id="routeText">Indécis</span></div>
+        </div>
+        <div class="audio-row"><button id="musicToggle" class="music-btn">Musique: OFF</button></div>
+        <div class="help">
+          <div>Flèches: bouger / naviguer</div>
+          <div>Z: valider</div>
+          <div>X: retour</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <canvas id="arena" width="520" height="240"></canvas>
+    </div>
+
+    <div id="textBox" class="text-box"></div>
+
+    <div id="menuBox" class="menu-box"></div>
+  </div>
+
+  <div id="endingSlideshow" class="ending-slideshow hidden" aria-hidden="true">
+    <img id="endingBgPhoto" class="ending-bg-photo" alt="Souvenir de victoire" />
+    <div class="ending-disco"></div>
+    <div id="endingPhotos" class="ending-photos"></div>
+    <div class="ending-fire fire-left"></div>
+    <div class="ending-fire fire-right"></div>
+    <div id="endingFlash" class="ending-flash"></div>
+    <div id="endingTitleCard" class="ending-title-card hidden">
+      <img src="assets/good_ending_card.png" alt="Good ending" />
+      <div class="ending-title-card-text">
+        <div class="ending-title-card-main">GOOD ENDING</div>
+        <div class="ending-title-card-sub">T'AS CAPTÉ L'AMBIANCE</div>
+      </div>
+    </div>
+    <div id="endingTextSwarm" class="ending-text-swarm">
+      <div class="ending-message msg1">GG SALE PUCEAU</div>
+      <div class="ending-message msg2">GG SALE PUCEAU</div>
+      <div class="ending-message msg3">GG SALE PUCEAU</div>
+    </div>
+    <div class="ending-overlay-ui">
+      <div id="endingTitle" class="ending-title">Good ending</div>
+      <div id="endingHint" class="ending-hint">Z pour recommencer</div>
+    </div>
+  </div>
+
+  <audio id="bgm" src="assets/hubo_boss.ogg" loop preload="auto"></audio>
+  <audio id="victoryBgm" src="assets/demitour.wav" preload="auto"></audio>
+  <script src="game.js"></script>
+</body>
+</html>
