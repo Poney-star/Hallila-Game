@@ -70,6 +70,8 @@ hubMusic.preload = 'auto';
 hubMusic.volume = 0.8;
 
 const hoverPlayers = new Map();
+const hoverPlayer = new Audio();
+hoverPlayer.preload = 'auto';
 
 function playHubMusic() {
   hubMusic.play().catch(() => {});
@@ -96,6 +98,15 @@ function playHoverAudio(gameId) {
   }
   try { audio.currentTime = 0; } catch (e) {}
   audio.play().catch(() => {});
+function playHoverAudio(gameId) {
+  const src = HOVER_AUDIO[gameId];
+  if (!src) return;
+  if (hoverPlayer.src.endsWith(src)) {
+    try { hoverPlayer.currentTime = 0; } catch (e) {}
+  } else {
+    hoverPlayer.src = src;
+  }
+  hoverPlayer.play().catch(() => {});
 }
 
 function makeIcon(game) {
