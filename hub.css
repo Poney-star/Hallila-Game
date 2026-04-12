@@ -169,6 +169,9 @@ body {
   inset: auto 0 58px 0;
   text-align: center;
   z-index: 1;
-  font-size: 14px;
+  font-size: 20px;
+  font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Marker Felt", cursive;
+  font-weight: 800;
+  letter-spacing: 0.2px;
   text-shadow: 0 1px 3px rgba(0,0,0,.8);
 }
