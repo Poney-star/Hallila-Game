@@ -69,6 +69,7 @@ hubMusic.loop = true;
 hubMusic.preload = 'auto';
 hubMusic.volume = 0.8;
 
+const hoverPlayers = new Map();
 const hoverPlayer = new Audio();
 hoverPlayer.preload = 'auto';
 
@@ -76,6 +77,27 @@ function playHubMusic() {
   hubMusic.play().catch(() => {});
 }
 
+function getHoverPlayer(gameId) {
+  const src = HOVER_AUDIO[gameId];
+  if (!src) return null;
+  if (!hoverPlayers.has(gameId)) {
+    const audio = new Audio(src);
+    audio.preload = 'auto';
+    hoverPlayers.set(gameId, audio);
+  }
+  return hoverPlayers.get(gameId);
+}
+
+function playHoverAudio(gameId) {
+  const audio = getHoverPlayer(gameId);
+  if (!audio) return;
+  if (!audio.paused) {
+    audio.pause();
+    try { audio.currentTime = 0; } catch (e) {}
+    return;
+  }
+  try { audio.currentTime = 0; } catch (e) {}
+  audio.play().catch(() => {});
 function playHoverAudio(gameId) {
   const src = HOVER_AUDIO[gameId];
   if (!src) return;
