@@ -284,6 +284,12 @@
     state.dialogueIndex = 0;
   }
 
+  function markHubCompletion() {
+    try {
+      localStorage.setItem('hallilaa.completed.samuelbros', '1');
+    } catch (e) {}
+  }
+
   function triggerBossIntro(game) {
     const p = game.player;
     const boss = game.level.boss;
@@ -318,6 +324,7 @@
         boss.x = clamp(boss.x, boss.leftWall + boss.wallW + 18, boss.rightWall - boss.wallW - boss.w - 18);
         setMessage('Madame Gillard te focus. Les murs de pics avancent et vous enferment tous les deux.', 160);
       } else {
+        markHubCompletion();
         state.mode = 'win';
       }
     }

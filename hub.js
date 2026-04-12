@@ -40,8 +40,8 @@ const GAMES = [
     left: '77%'
   },
   {
-    id: 'huboboss',
-    title: 'HUBO BOSSE',
+    id: 'zerbiboss',
+    title: 'Zerbiboss',
     href: './Hubo Boss/index.html',
     icon: './Hubo Boss.jpeg',
     top: '37%',
@@ -51,10 +51,41 @@ const GAMES = [
   }
 ];
 
-const REQUIRED = GAMES.filter(g => g.id !== 'huboboss').map(g => g.id);
+const REQUIRED = GAMES.filter(g => g.id !== 'zerbiboss').map(g => g.id);
 const keyFor = id => `hallilaa.completed.${id}`;
 const isDone = id => localStorage.getItem(keyFor(id)) === '1';
 const allUnlocked = () => REQUIRED.every(isDone);
+const HOVER_AUDIO = {
+  aduc: './Aduc.wav',
+  alexouu: './Alexouu.wav',
+  complothan: './Complothan.wav',
+  kawaiimon: './Kawaiimon/pokeitan final.wav',
+  samuelbros: './SamuelBros.wav',
+  zerbiboss: './Hub.wav'
+};
+
+const hubMusic = new Audio('./Hub.wav');
+hubMusic.loop = true;
+hubMusic.preload = 'auto';
+hubMusic.volume = 0.8;
+
+const hoverPlayer = new Audio();
+hoverPlayer.preload = 'auto';
+
+function playHubMusic() {
+  hubMusic.play().catch(() => {});
+}
+
+function playHoverAudio(gameId) {
+  const src = HOVER_AUDIO[gameId];
+  if (!src) return;
+  if (hoverPlayer.src.endsWith(src)) {
+    try { hoverPlayer.currentTime = 0; } catch (e) {}
+  } else {
+    hoverPlayer.src = src;
+  }
+  hoverPlayer.play().catch(() => {});
+}
 
 function makeIcon(game) {
   const a = document.createElement('a');
@@ -77,9 +108,11 @@ function makeIcon(game) {
   if (locked) {
     a.addEventListener('click', (e) => {
       e.preventDefault();
-      alert("Pour débloquer HUBO BOSSE, il faut d'abord gagner tous les autres jeux.");
+      alert("Pour débloquer Zerbiboss, il faut d'abord gagner tous les autres jeux.");
     });
   }
+  a.addEventListener('mouseenter', () => playHoverAudio(game.id));
+  a.addEventListener('focus', () => playHoverAudio(game.id));
 
   return a;
 }
@@ -95,9 +128,14 @@ function render() {
   progress.textContent = `${doneCount}/${REQUIRED.length} jeux terminés`;
 
   document.getElementById('lockNote').textContent = allUnlocked()
-    ? 'HUBO BOSSE est débloqué.'
-    : 'HUBO BOSSE se débloque après une victoire dans tous les autres jeux.';
+    ? 'Zerbiboss est débloqué.'
+    : 'Finir les jeux sur les sides pour affronter le grand et bo Zerbib';
 }
 
 window.addEventListener('storage', render);
-window.addEventListener('DOMContentLoaded', render);
+window.addEventListener('DOMContentLoaded', () => {
+  render();
+  playHubMusic();
+});
+window.addEventListener('pointerdown', playHubMusic, { once: true });
+window.addEventListener('keydown', playHubMusic, { once: true });

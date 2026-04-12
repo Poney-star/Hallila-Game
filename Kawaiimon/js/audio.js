@@ -2,10 +2,12 @@ const TRACKS = {
   world: {
     src: './pokeitan final.wav',
     loop: true,
+    volume: 0.75,
   },
   battle: {
     src: './pokeitan fight.wav',
     loop: true,
+    volume: 0.75,
   },
 };
 
@@ -19,6 +21,7 @@ function ensureAudio(trackName) {
   const config = TRACKS[trackName];
   const audio = new Audio(config.src);
   audio.loop = Boolean(config.loop);
+  audio.volume = typeof config.volume === 'number' ? config.volume : 1;
   audio.preload = 'auto';
   audio.playsInline = true;
   audio.dataset.track = trackName;
