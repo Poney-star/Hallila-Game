@@ -266,6 +266,7 @@ let endingMessageTimer = null;
 let endingExplosionTimer = null;
 let endingConfettiTimer = null;
 let endingPhotoJuggleTimer = null;
+let endingStartTimer = null;
 const endingTimeouts = new Set();
 let lastTime = 0;
 let accumulator = 0;
@@ -470,6 +471,10 @@ function spawnConfettiBurst(count = 18) {
 }
 
 function stopVictorySequence() {
+  if (endingStartTimer) {
+    clearTimeout(endingStartTimer);
+    endingStartTimer = null;
+  }
   if (slideshowTimer) {
     clearInterval(slideshowTimer);
     slideshowTimer = null;
@@ -859,10 +864,17 @@ function endGame() {
   state.endingLine = line;
   renderMenu();
   setDialogue(`${title}
-${line}`, { after: 'startVictorySequence' });
+${line}`);
+  if (endingStartTimer) clearTimeout(endingStartTimer);
+  endingStartTimer = setTimeout(() => {
+    endingStartTimer = null;
+    if (!state.ended || state.winMode) return;
+    beginEndingSequence();
+  }, Math.max(350, TYPEWRITER_DURATION * 1000 + 120));
 }
 
 function beginEndingSequence() {
+  if (state.winMode) return;
   startVictorySequence(state.endingTitle || '* Fin.', state.endingLine || '* Le Zerbib gagne encore.');
 }
 
