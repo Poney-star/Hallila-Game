@@ -486,15 +486,14 @@ body {
   border: 4px solid #fff;
   border-radius: 14px;
   will-change: transform, left, top;
-  animation: photoSpin 5.5s linear infinite, photoFloat 5s ease-in-out infinite alternate;
+  animation: photoFloat 5s ease-in-out infinite alternate;
 }
-.ending-photo.swap-out { opacity: .15; transform: scale(.72) rotate(-18deg)!important; }
-.ending-photo.burst-in { animation: photoSpin 4s linear infinite, photoBurst .55s ease; }
-@keyframes photoSpin { from { rotate: 0deg; } to { rotate: 360deg; } }
+.ending-photo.swap-out { opacity: .15; transform: scale(.72)!important; }
+.ending-photo.burst-in { animation: photoBurst .55s ease; }
 @keyframes photoFloat { from { translate: 0 0; } to { translate: 22px -18px; } }
 @keyframes photoBurst {
-  from { transform: scale(.55) rotate(-24deg); }
-  to { transform: scale(1) rotate(0deg); }
+  from { transform: scale(.55); }
+  to { transform: scale(1); }
 }
 .ending-text-swarm {
   position: absolute;
