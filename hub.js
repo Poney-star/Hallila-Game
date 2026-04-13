@@ -59,7 +59,7 @@ const HOVER_AUDIO = {
   aduc: './Aduc.wav',
   alexouu: './Alexouu.wav',
   complothan: './Complothan.wav',
-  kawaiimon: './Kawaiimon.ogg',
+  kawaiimon: './Kawaiimon.mp3',
   samuelbros: './SamuelBros.wav',
   huboboss: './Hubo Boss.wav'
 };
