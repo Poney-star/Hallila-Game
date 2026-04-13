@@ -2,7 +2,7 @@ const TYPEWRITER_DURATION = 2.0;
 const FIXED_DT = 1 / 120;
 const MAX_FRAME = 0.1;
 const BGM_VOLUME = 0.1125;
-const ENDING_BGM_VOLUME = 0.059375;
+const ENDING_BGM_VOLUME = 0.2375;
 const GLOBAL_DIFFICULTY = 1.15;
 
 const forms = [
@@ -356,7 +356,6 @@ function positionEndingPhoto(el, immediate = false) {
   const width = rand(22, 38);
   const left = randomPercent(0, 72);
   const top = randomPercent(0, 58);
-  const rot = rand(-22, 22);
   const scale = (94 + rand(0, 36)) / 100;
   const hue = rand(-18, 18);
   const sat = 105 + rand(0, 35);
@@ -368,10 +367,10 @@ function positionEndingPhoto(el, immediate = false) {
   el.style.left = `${left}%`;
   el.style.top = `${top}%`;
   el.style.zIndex = String(rand(7, 15));
-  el.style.transform = `rotate(${rot}deg) scale(${scale})`;
+  el.style.transform = `scale(${scale})`;
   el.style.filter = `saturate(${sat}%) contrast(1.07) brightness(${bright}%) hue-rotate(${hue}deg)`;
   el.style.boxShadow = `0 0 0 4px #000, 0 ${shadow}px ${shadow * 2}px rgba(0,0,0,0.55), 0 0 26px rgba(255,255,255,0.14)`;
-  el.style.animationDelay = `${delay}s, ${delay}s`;
+  el.style.animationDelay = `${delay}s`;
   if (immediate) requestAnimationFrame(() => { el.style.transition = ''; });
 }
 
@@ -1101,7 +1100,7 @@ function spawnBullet(type) {
       const fromLeft = Math.random() < 0.5;
       const startX = fromLeft ? -64 : W + 10;
       const speed = fromLeft ? 185 : -185;
-      warningRectSpawn(startX, y, 60, 24, 0.55, speed, 0);
+      warningRectSpawn(startX, y, 60, 24, 0.55, speed, 0, { spin: fromLeft ? 7.5 : -7.5 });
       break;
     }
     case 'tickets': {
@@ -1219,6 +1218,7 @@ function updateBullet(b, dt) {
   }
   b.x += (b.vx || 0) * dt;
   b.y += (b.vy || 0) * dt;
+  if (b.spin) b.angle = (b.angle || 0) + b.spin * dt;
   if (b.wiggle) b.x += Math.sin(b.age * 8) * 22 * dt * b.wiggle;
   if (b.bounceX) {
     const hw = b.w ? b.w / 2 : (b.r || b.size || 8);
@@ -1361,6 +1361,12 @@ function drawBullet(b) {
       drawDiamond(b.x, b.y, b.size, !b.ghost);
       break;
     case 'rect':
+      if (b.angle) {
+        ctx.save();
+        ctx.translate(b.x + b.w / 2, b.y + b.h / 2);
+        ctx.rotate(b.angle);
+        ctx.translate(-(b.x + b.w / 2), -(b.y + b.h / 2));
+      }
       if (b.spriteType === 'alarm') {
         const frames = spriteAssets.alarm;
         const frameCount = b.frameCount || frames.length;
@@ -1378,6 +1384,7 @@ function drawBullet(b) {
       } else {
         b.ghost ? ctx.strokeRect(b.x, b.y, b.w, b.h) : ctx.fillRect(b.x, b.y, b.w, b.h);
       }
+      if (b.angle) ctx.restore();
       break;
     case 'ring':
       ctx.lineWidth = b.warning ? 1 : Math.max(2, b.width);
