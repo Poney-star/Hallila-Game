@@ -51,8 +51,12 @@ const GAMES = [
   }
 ];
 
-const REQUIRED = GAMES.filter(g => g.id !== 'zerbiboss').map(g => g.id);
-const keyFor = id => `hallilaa.completed.${id}`;
+const REQUIRED = GAMES.filter(g => !g.requiresAll).map(g => g.id);
+const COMPLETION_KEY_BY_ID = {
+  huboboss: 'zerbiboss'
+};
+const completionId = id => COMPLETION_KEY_BY_ID[id] || id;
+const keyFor = id => `hallilaa.completed.${completionId(id)}`;
 const isDone = id => localStorage.getItem(keyFor(id)) === '1';
 const allUnlocked = () => REQUIRED.every(isDone);
 const HOVER_AUDIO = {
