@@ -40,8 +40,8 @@ const GAMES = [
     left: '77%'
   },
   {
-    id: 'zerbiboss',
-    title: 'Zerbiboss',
+    id: 'huboboss',
+    title: 'Hubo Boss',
     href: './Hubo Boss/index.html',
     icon: './Hubo Boss.jpeg',
     top: '37%',
@@ -59,9 +59,9 @@ const HOVER_AUDIO = {
   aduc: './Aduc.wav',
   alexouu: './Alexouu.wav',
   complothan: './Complothan.wav',
-  kawaiimon: './Kawaiimon/pokeitan final.wav',
+  kawaiimon: './Kawaiimon.ogg',
   samuelbros: './SamuelBros.wav',
-  zerbiboss: './Hub.wav'
+  huboboss: './Hubo Boss.wav'
 };
 
 const hubMusic = new Audio('./Hub.wav');
