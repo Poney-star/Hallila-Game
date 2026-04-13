@@ -1491,7 +1491,16 @@ window.addEventListener('keydown', (e) => {
   if (!musicStarted && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','z','Z','x','X'].includes(e.key) && userWantedMusic) startMusic();
   keys[e.key] = true;
   if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','z','Z','x','X'].includes(e.key)) e.preventDefault();
-  if (state.ended && (e.key === 'z' || e.key === 'Z')) { restartGame(); return; }
+  if (state.ended && (e.key === 'z' || e.key === 'Z')) {
+    if (state.winMode) {
+      restartGame();
+    } else if (textFx.active) {
+      finishText(true);
+    } else {
+      beginEndingSequence();
+    }
+    return;
+  }
   if (state.ended) return;
   if (textFx.active) {
     if (e.key === 'z' || e.key === 'Z') finishText(true);
